@@ -12,10 +12,6 @@ import {
   type BookingInput,
 } from "@/lib/booking";
 
-const field =
-  "w-full rounded-xl border border-sand bg-white px-3 py-2.5 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20";
-const label = "mb-1.5 block text-sm font-medium text-ink/70";
-
 /** Halaman ini di-prerender saat build, jadi "hari ini" hanya diketahui di client. */
 const neverChanges = () => () => {};
 const todayIso = () => {
@@ -27,6 +23,11 @@ const todayIso = () => {
 
 const DURATIONS = [1, 2, 3, 4];
 const PLAYERS = [1, 2, 3, 4, 5, 6, 7, 8];
+
+const field =
+  "w-full rounded-lg bg-cream px-3.5 py-3 font-medium text-ink outline-none ring-1 ring-transparent transition focus:ring-2 focus:ring-cream";
+const label =
+  "mb-2 block text-[0.7rem] font-bold tracking-[0.12em] text-cream/45 uppercase";
 
 export function Estimator() {
   const [input, setInput] = useState<BookingInput>({
@@ -40,6 +41,7 @@ export function Estimator() {
     withCoach: false,
     name: "",
   });
+
   const today = useSyncExternalStore(neverChanges, todayIso, () => "");
 
   const set = <K extends keyof BookingInput>(key: K, value: BookingInput[K]) =>
@@ -58,9 +60,9 @@ export function Estimator() {
   const coachAvailable = input.players <= maxCoachPeople;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
-      <div className="rounded-2xl border border-sand bg-white/70 p-5 sm:p-6">
-        <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid gap-8 lg:grid-cols-[1fr_23rem]">
+      <div className="rounded-2xl bg-brand-deep/35 p-5 sm:p-7">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={label} htmlFor="date">
               Tanggal
@@ -189,7 +191,7 @@ export function Estimator() {
 
           <div className="sm:col-span-2">
             <label className={label} htmlFor="name">
-              Nama <span className="font-normal text-ink/40">(opsional)</span>
+              Nama <span className="text-cream/25">(opsional)</span>
             </label>
             <input
               id="name"
@@ -202,17 +204,17 @@ export function Estimator() {
           </div>
         </div>
 
-        <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-sand bg-cream p-4">
+        <label className="mt-6 flex cursor-pointer items-start gap-3.5 rounded-lg bg-cream/10 p-4 transition-colors hover:bg-cream/15">
           <input
             type="checkbox"
-            className="mt-0.5 size-5 accent-brand"
+            className="mt-0.5 size-5 shrink-0 accent-cream"
             checked={input.withCoach}
             disabled={!coachAvailable}
             onChange={(e) => set("withCoach", e.target.checked)}
           />
           <span className="text-sm">
-            <span className="font-semibold">Pakai coach</span>
-            <span className="block text-ink/60">
+            <span className="font-bold text-cream">Pakai coach</span>
+            <span className="mt-0.5 block text-cream/55">
               {coachAvailable
                 ? `${coachRates.find((c) => c.people === input.players)?.label} · sudah termasuk bola & ballboy, belum termasuk lapangan`
                 : `Harga coach di pricelist berhenti di ${maxCoachPeople} orang`}
@@ -222,51 +224,58 @@ export function Estimator() {
       </div>
 
       <div className="lg:sticky lg:top-24 lg:h-fit">
-        <div className="rounded-2xl bg-brand p-5 text-cream sm:p-6">
-          <p className="text-sm font-medium text-cream/60">Estimasi biaya</p>
+        <div className="rounded-2xl bg-cream p-6 text-ink">
+          <p className="text-[0.7rem] font-bold tracking-[0.15em] text-ink/40 uppercase">
+            Estimasi biaya
+          </p>
 
-          <dl className="mt-4 space-y-3 border-b border-cream/15 pb-4">
+          <dl className="mt-5 space-y-3.5">
             {result.items.map((item) => (
-              <div key={item.label} className="flex items-start justify-between gap-3">
+              <div key={item.label} className="flex items-start justify-between gap-4">
                 <dt className="text-sm">
-                  <span className="block font-medium">{item.label}</span>
-                  <span className="block text-xs text-cream/50">{item.detail}</span>
+                  <span className="block font-bold">{item.label}</span>
+                  <span className="block text-xs leading-relaxed text-ink/45">
+                    {item.detail}
+                  </span>
                 </dt>
-                <dd className="shrink-0 text-sm font-semibold tabular-nums">
+                <dd className="shrink-0 text-sm font-bold tabular-nums">
                   {rupiah(item.amount)}
                 </dd>
               </div>
             ))}
           </dl>
 
-          <div className="mt-4 flex items-baseline justify-between">
-            <span className="text-sm text-cream/70">Total</span>
-            <span className="text-2xl font-extrabold tabular-nums">{rupiah(result.total)}</span>
+          <div className="mt-5 flex items-baseline justify-between border-t-2 border-ink pt-4">
+            <span className="text-sm font-bold text-ink/50">Total</span>
+            <span className="text-3xl font-extrabold tracking-tight tabular-nums">
+              {rupiah(result.total)}
+            </span>
           </div>
 
           <a
             href={whatsappUrl(message)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-wa px-4 py-3.5 font-bold text-[#0b3d1f] transition hover:brightness-105 active:scale-[0.99]"
+            className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-wa px-4 py-4 font-extrabold text-[#08331a] transition hover:brightness-105 active:scale-[0.99]"
           >
             <WhatsAppIcon />
             Booking via WhatsApp
           </a>
 
-          <p className="mt-3 text-center text-xs text-cream/50">
+          <p className="mt-3 text-center text-xs text-ink/40">
             Pesan sudah terisi otomatis. Kamu tinggal kirim.
           </p>
         </div>
 
         <div className="mt-4 space-y-2">
           {result.notes.map((note) => (
-            <p key={note} className="rounded-lg bg-sand/60 px-3 py-2 text-xs text-ink/70">
+            <p key={note} className="rounded-lg bg-cream/10 px-3.5 py-2.5 text-xs leading-relaxed text-cream/60">
               {note}
             </p>
           ))}
-          <p className="rounded-lg bg-sand/60 px-3 py-2 text-xs text-ink/70">
-            Angka ini estimasi, bukan konfirmasi booking. Ketersediaan slot dipastikan admin.
+          <p className="rounded-lg bg-cream/10 px-3.5 py-2.5 text-xs leading-relaxed text-cream/60">
+            Angka ini estimasi, bukan konfirmasi booking. Ketersediaan slot dipastikan
+            admin.
           </p>
         </div>
       </div>

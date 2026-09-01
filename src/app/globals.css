@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
 @theme {
+  /* Coklat brand diambil dari menu cetak mereka (#5D351F). */
   --color-brand: #5d351f;
-  --color-brand-dark: #40230f;
-  --color-brand-light: #7d4d33;
+  --color-brand-deep: #3d2010;
+  --color-brand-soft: #7d4d33;
   --color-cream: #f8f3ed;
-  --color-sand: #e9dccd;
+  --color-sand: #e6d8c8;
   --color-ink: #2a1a10;
+  /* Hijau WhatsApp dipakai hanya untuk tombol booking — satu-satunya aksen. */
   --color-wa: #25d366;
+
+  --radius: 0.875rem;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-lg: calc(var(--radius) * 1.6);
+
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -16,7 +23,30 @@ body {
   color: var(--color-ink);
 }
 
-/* Slot waktu di <select> tidak boleh terpotong di iOS */
+/* Ilustrasi dari menu cetak mereka, dipakai sebagai mask supaya warnanya
+   ikut `color` dan puluhan KB path tidak menempel di HTML. */
+.art {
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: currentColor;
+}
+.art-serve {
+  -webkit-mask-image: url("/art/player-serve.svg");
+  mask-image: url("/art/player-serve.svg");
+}
+.art-return {
+  -webkit-mask-image: url("/art/player-return.svg");
+  mask-image: url("/art/player-return.svg");
+}
+.art-mark {
+  -webkit-mask-image: url("/art/peepz-mark.svg");
+  mask-image: url("/art/peepz-mark.svg");
+}
+
 select {
   appearance: none;
 }

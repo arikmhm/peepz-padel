@@ -40,10 +40,7 @@ const FAQ = [
     q: "Apakah bola disediakan?",
     a: `Bola dijual per tube (isi 3) seharga ${rupiah(ballTube.price)}. Khusus sesi coach, bola sudah termasuk jadi tidak perlu beli terpisah.`,
   },
-  {
-    q: "Jam berapa buka?",
-    a: `${business.hoursLabel}.`,
-  },
+  { q: "Jam berapa buka?", a: `${business.hoursLabel}.` },
   {
     q: "Bagaimana cara booking?",
     a: "Pilih tanggal dan jam di kalkulator, lalu tekan tombol WhatsApp. Pesanmu sudah terisi otomatis, admin tinggal mengecek ketersediaan slot dan mengonfirmasi.",
@@ -59,7 +56,6 @@ export default function Home() {
     <>
       <JsonLd />
       <Header />
-
       <main className="flex-1">
         <Hero />
         <Pricing />
@@ -68,7 +64,6 @@ export default function Home() {
         <Location />
         <Faq />
       </main>
-
       <Footer />
     </>
   );
@@ -78,23 +73,31 @@ export default function Home() {
 
 function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-dark/20 bg-brand/95 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-3">
-        <a href="#top" className="text-lg font-extrabold tracking-tight text-cream">
-          peepz<span className="text-cream/50">!</span>
+    <header className="sticky top-0 z-50 bg-brand/90 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5">
+        <a
+          href="#top"
+          className="text-lg font-extrabold tracking-tight text-cream"
+          aria-label={business.name}
+        >
+          peepz<span className="text-cream/40">!</span>
         </a>
 
-        <nav className="hidden gap-6 text-sm text-cream/70 md:flex">
-          {NAV.map(([label, href]) => (
-            <a key={href} href={href} className="transition hover:text-cream">
-              {label}
+        <nav className="hidden gap-7 text-sm text-cream/60 md:flex">
+          {NAV.map(([labelText, href]) => (
+            <a
+              key={href}
+              href={href}
+              className="transition-colors hover:text-cream"
+            >
+              {labelText}
             </a>
           ))}
         </nav>
 
         <a
           href="#estimasi"
-          className="rounded-full bg-cream px-4 py-2 text-sm font-bold text-brand transition hover:bg-white"
+          className="rounded-full bg-cream px-4 py-2 text-sm font-bold text-brand transition-colors hover:bg-white"
         >
           Booking
         </a>
@@ -107,52 +110,71 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="bg-brand text-cream">
-      <div className="mx-auto max-w-5xl px-5 pt-14 pb-16 sm:pt-20 sm:pb-24">
-        <p className="text-sm font-semibold tracking-widest text-cream/50 uppercase">
-          Kudus, Jawa Tengah
-        </p>
+    <section id="top" className="relative overflow-hidden bg-brand text-cream">
+      {/* Wrapper ini membatasi ilustrasi supaya berhenti tepat di atas baris fakta. */}
+      <div className="relative">
+        <div
+          aria-hidden
+          className="art art-serve pointer-events-none absolute -right-16 bottom-0 h-[26rem] w-[20rem] text-cream/20 sm:-right-4 sm:h-[34rem] sm:w-[26rem] lg:right-8 lg:h-[36rem] lg:w-[28rem] lg:text-cream/90"
+        />
 
-        <h1 className="mt-4 text-5xl leading-[0.95] font-extrabold tracking-tight sm:text-7xl">
-          Peepz
-          <br />
-          Padel
-        </h1>
+        <div className="relative mx-auto max-w-6xl px-6 pt-16 pb-0 sm:pt-24">
+          <p className="text-xs font-bold tracking-[0.2em] text-cream/45 uppercase">
+            {business.city}, Jawa Tengah
+          </p>
 
-        <p className="mt-6 max-w-lg text-lg text-cream/75">
-          Sewa lapangan mulai {rupiah(rateBands[0].price)}/jam. Raket, bola, dan coach
-          tersedia di tempat. Buka sampai tengah malam.
-        </p>
+          <h1 className="mt-5 text-[4.5rem] leading-[0.82] font-extrabold tracking-[-0.04em] sm:text-[7rem] lg:text-[8.5rem]">
+            Peepz
+            <br />
+            Padel
+          </h1>
 
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="#estimasi"
-            className="rounded-xl bg-cream px-5 py-3 font-bold text-brand transition hover:bg-white"
-          >
-            Hitung biaya & booking
-          </a>
-          <a
-            href="#harga"
-            className="rounded-xl border border-cream/25 px-5 py-3 font-bold transition hover:bg-cream/10"
-          >
-            Lihat harga
-          </a>
+          <p className="mt-7 max-w-sm text-lg leading-relaxed text-cream/70 sm:max-w-md">
+            Sewa lapangan mulai {rupiah(rateBands[0].price)}/jam. Raket, bola,
+            dan coach tersedia di tempat. Buka sampai tengah malam.
+          </p>
+
+          <div className="mt-9 flex flex-wrap gap-3 pb-16 sm:pb-24">
+            <a
+              href="#estimasi"
+              className="rounded-xl bg-cream px-6 py-3.5 font-bold text-brand transition-colors hover:bg-white"
+            >
+              Hitung biaya & booking
+            </a>
+            <a
+              href="#harga"
+              className="rounded-xl px-6 py-3.5 font-bold text-cream/80 ring-1 ring-cream/25 transition-colors hover:bg-cream/10 hover:text-cream"
+            >
+              Lihat harga
+            </a>
+          </div>
         </div>
+      </div>
 
-        <dl className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-cream/15 bg-cream/15 sm:grid-cols-3">
+      <dl className="relative z-10 border-t border-cream/15 bg-brand">
+        <div className="mx-auto grid max-w-6xl px-6 sm:grid-cols-3">
           {[
             ["Jam buka", "08.00 – 00.00", "Setiap hari"],
             ["Lokasi", "Jl. Lkr. Utara", "Peganjaran, Bae"],
             ["Booking", "Lewat WhatsApp", "Dikonfirmasi admin"],
-          ].map(([k, v, sub]) => (
-            <div key={k} className="bg-brand px-5 py-4">
-              <dt className="text-xs tracking-wider text-cream/45 uppercase">{k}</dt>
-              <dd className="mt-1 font-bold">{v}</dd>
-              <dd className="text-sm text-cream/50">{sub}</dd>
+          ].map(([k, v, sub], i) => (
+            <div
+              key={k}
+              className={`py-5 sm:px-6 sm:first:pl-0 ${
+                i > 0
+                  ? "border-t border-cream/15 sm:border-t-0 sm:border-l"
+                  : ""
+              }`}
+            >
+              <dt className="text-[0.7rem] font-bold tracking-[0.15em] text-cream/40 uppercase">
+                {k}
+              </dt>
+              <dd className="mt-1.5 font-bold">{v}</dd>
+              <dd className="text-sm text-cream/45">{sub}</dd>
             </div>
           ))}
-        </dl>
-      </div>
+        </div>
+      </dl>
     </section>
   );
 }
@@ -161,50 +183,101 @@ function Hero() {
 
 function Pricing() {
   return (
-    <Section id="harga" title="Harga" lead="Semua harga per jam, kecuali disebutkan lain.">
-      <div className="grid gap-5 md:grid-cols-3">
-        <Card title="Sewa lapangan" wide>
-          <ul className="divide-y divide-sand">
-            {rateBands.map((band) => (
-              <li key={band.label} className="flex items-center justify-between gap-4 py-3">
-                <div>
-                  <p className="font-semibold">
-                    {fmtHour(band.startHour)} – {fmtHour(band.endHour)}
-                  </p>
-                  <p className="text-sm text-ink/50">{band.label}</p>
-                </div>
-                <p className="shrink-0 font-bold tabular-nums">
-                  {rupiah(band.price)}
-                  <span className="font-medium text-ink/40">/jam</span>
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Card>
+    <Section id="harga" eyebrow="Pricelist" title="Harga">
+      <PriceList
+        caption="Sewa lapangan"
+        note="Sesi yang melewati pergantian jam dihitung per jam sesuai tarifnya."
+        rows={rateBands.map((b) => ({
+          key: b.label,
+          left: `${fmtHour(b.startHour)} – ${fmtHour(b.endHour)}`,
+          sub: b.label,
+          right: rupiah(b.price),
+          unit: "/jam",
+        }))}
+      />
 
-        <Card title="Sewa raket">
-          <ul className="divide-y divide-sand">
-            {racketTiers.map((tier) => (
-              <li key={tier.id} className="flex items-center justify-between gap-4 py-3">
-                <span className="text-sm">
-                  {tier.name}
-                  {tier.pending && <Pending />}
-                </span>
-                <span className="shrink-0 text-sm font-bold tabular-nums">
-                  <span className="font-medium text-ink/40">dari </span>
-                  {rupiah(tier.price)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Card>
+      <div className="mt-14 grid gap-14 md:grid-cols-2">
+        <PriceList
+          caption="Sewa raket"
+          note="Nama tipe raket menunggu konfirmasi owner."
+          rows={racketTiers.map((t) => ({
+            key: t.id,
+            left: t.name,
+            sub: "per sesi",
+            right: rupiah(t.price),
+            prefix: "dari",
+            pending: t.pending,
+          }))}
+        />
 
-        <Card title={ballTube.label}>
-          <p className="py-3 text-2xl font-extrabold">{rupiah(ballTube.price)}</p>
-          <p className="text-sm text-ink/50">{ballTube.detail}</p>
-        </Card>
+        <div>
+          <Caption>{ballTube.label}</Caption>
+          <div className="mt-5 flex items-baseline gap-3 border-t-2 border-ink pt-5">
+            <span className="text-5xl font-extrabold tracking-tight tabular-nums">
+              {rupiah(ballTube.price)}
+            </span>
+            <span className="text-ink/45">/tube</span>
+          </div>
+          <p className="mt-3 text-ink/50">{ballTube.detail}</p>
+        </div>
       </div>
     </Section>
+  );
+}
+
+type Row = {
+  key: string;
+  left: string;
+  sub?: string;
+  right: string;
+  unit?: string;
+  prefix?: string;
+  pending?: boolean;
+};
+
+function PriceList({
+  caption,
+  rows,
+  note,
+}: {
+  caption: string;
+  rows: Row[];
+  note?: string;
+}) {
+  return (
+    <div>
+      <Caption>{caption}</Caption>
+      <ul className="mt-5 border-t-2 border-ink">
+        {rows.map((r) => (
+          <li
+            key={r.key}
+            className="flex items-baseline justify-between gap-6 border-b border-ink/10 py-5"
+          >
+            <span>
+              <span className="text-lg font-bold">
+                {r.left}
+                {r.pending && <Pending />}
+              </span>
+              {r.sub && (
+                <span className="block text-sm text-ink/45">{r.sub}</span>
+              )}
+            </span>
+            <span className="shrink-0 tabular-nums">
+              {r.prefix && (
+                <span className="mr-1.5 text-sm font-medium text-ink/40">
+                  {r.prefix}
+                </span>
+              )}
+              <span className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+                {r.right}
+              </span>
+              {r.unit && <span className="text-ink/40">{r.unit}</span>}
+            </span>
+          </li>
+        ))}
+      </ul>
+      {note && <p className="mt-4 text-sm text-ink/45">{note}</p>}
+    </div>
   );
 }
 
@@ -212,14 +285,24 @@ function Pricing() {
 
 function EstimatorSection() {
   return (
-    <Section
-      id="estimasi"
-      title="Hitung biaya kamu"
-      lead="Pilih kebutuhanmu, lihat totalnya, lalu kirim ke admin lewat WhatsApp dengan pesan yang sudah terisi."
-      tinted
-    >
-      <Estimator />
-    </Section>
+    <section id="estimasi" className="scroll-mt-16 bg-brand text-cream">
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <p className="text-xs font-bold tracking-[0.2em] text-cream/40 uppercase">
+          Estimasi
+        </p>
+        <h2 className="mt-4 max-w-2xl text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl">
+          Hitung dulu, baru chat admin
+        </h2>
+        <p className="mt-4 max-w-lg text-cream/60">
+          Pilih kebutuhanmu di bawah. Tombol WhatsApp-nya sudah membawa tanggal,
+          jam, dan total — kamu tinggal kirim.
+        </p>
+
+        <div className="mt-10">
+          <Estimator />
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -227,49 +310,57 @@ function EstimatorSection() {
 
 function Coach() {
   return (
-    <Section
-      id="coach"
-      title="Coach"
-      lead="Belajar dari awal atau memperbaiki pukulan. Harga per jam, mengikuti jumlah peserta."
-    >
-      <div className="grid gap-5 md:grid-cols-[1fr_18rem]">
-        <Card title="Harga per jam" wide>
-          <ul className="divide-y divide-sand">
+    <Section id="coach" eyebrow="Latihan" title="Coach">
+      <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+        <div>
+          <div
+            aria-hidden
+            className="art art-return mx-auto h-56 w-full max-w-56 text-brand sm:h-72 sm:max-w-72"
+          />
+
+          <div className="mt-8">
+            <Caption>Sudah termasuk</Caption>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {coachIncludes.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full bg-brand px-4 py-1.5 text-sm font-bold text-cream"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="mt-6 border-l-2 border-brand pl-4 text-ink/70">
+            <strong className="block text-brand">
+              Belum termasuk lapangan.
+            </strong>
+            Sewa lapangan dihitung terpisah dari harga coach — pakai kalkulator
+            di atas untuk melihat total keduanya.
+          </p>
+        </div>
+
+        <div>
+          <Caption>Harga per jam</Caption>
+          <ul className="mt-5 border-t-2 border-ink">
             {coachRates.map((rate) => (
-              <li key={rate.people} className="flex items-center justify-between gap-4 py-3">
-                <span className="font-medium">{rate.label}</span>
-                <span className="text-right tabular-nums">
-                  <span className="font-bold">{rupiah(rate.price)}</span>
-                  <span className="block text-xs text-ink/45">
+              <li
+                key={rate.people}
+                className="flex items-baseline justify-between gap-6 border-b border-ink/10 py-4"
+              >
+                <span className="text-lg font-bold">{rate.label}</span>
+                <span className="shrink-0 text-right tabular-nums">
+                  <span className="text-2xl font-extrabold tracking-tight">
+                    {rupiah(rate.price)}
+                  </span>
+                  <span className="block text-sm text-ink/45">
                     {rupiah(Math.round(rate.price / rate.people))} / orang
                   </span>
                 </span>
               </li>
             ))}
           </ul>
-        </Card>
-
-        <div className="space-y-4">
-          <Card title="Sudah termasuk">
-            <ul className="space-y-2 py-1">
-              {coachIncludes.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm">
-                  <span aria-hidden className="text-brand">
-                    ✓
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Card>
-
-          <div className="rounded-2xl border-2 border-brand bg-brand/5 p-5">
-            <p className="text-sm font-bold text-brand">Belum termasuk lapangan</p>
-            <p className="mt-1.5 text-sm text-ink/70">
-              Sewa lapangan dihitung terpisah dari harga coach. Pakai kalkulator di atas
-              untuk melihat total keduanya sekaligus.
-            </p>
-          </div>
         </div>
       </div>
     </Section>
@@ -280,28 +371,30 @@ function Coach() {
 
 function Location() {
   return (
-    <Section id="lokasi" title="Lokasi" lead={business.hoursLabel} tinted>
-      <div className="grid gap-5 md:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-sand">
-          <iframe
-            title={`Peta lokasi ${business.name}`}
-            src={mapsEmbedUrl}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="h-72 w-full md:h-full"
-          />
-        </div>
+    <section id="lokasi" className="scroll-mt-16 border-t border-ink/10">
+      <div className="mx-auto grid max-w-6xl lg:grid-cols-2">
+        <div className="px-6 py-20 sm:py-24">
+          <p className="text-xs font-bold tracking-[0.2em] text-ink/40 uppercase">
+            Mampir
+          </p>
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Lokasi
+          </h2>
 
-        <Card title="Alamat">
-          <p className="py-2 text-ink/75">{business.address}</p>
-          <p className="text-sm text-ink/45">Plus Code {business.plusCode}</p>
+          <p className="mt-6 max-w-sm text-lg leading-relaxed text-ink/70">
+            {business.address}
+          </p>
+          <p className="mt-2 text-sm text-ink/40">
+            Plus Code {business.plusCode}
+          </p>
+          <p className="mt-6 font-bold">{business.hoursLabel}</p>
 
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-cream transition hover:bg-brand-dark"
+              className="rounded-xl bg-brand px-5 py-3 font-bold text-cream transition-colors hover:bg-brand-deep"
             >
               Buka di Google Maps
             </a>
@@ -309,14 +402,24 @@ function Location() {
               href={waGeneral}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl border border-sand px-4 py-2.5 text-sm font-bold transition hover:bg-sand/50"
+              className="rounded-xl px-5 py-3 font-bold ring-1 ring-ink/15 transition-colors hover:bg-sand/50"
             >
               Tanya admin
             </a>
           </div>
-        </Card>
+        </div>
+
+        <div className="min-h-72 lg:min-h-[32rem]">
+          <iframe
+            title={`Peta lokasi ${business.name}`}
+            src={mapsEmbedUrl}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-full min-h-72 w-full grayscale-[0.35]"
+          />
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -324,28 +427,32 @@ function Location() {
 
 function Faq() {
   return (
-    <Section id="faq" title="Pertanyaan yang sering masuk">
-      <div className="divide-y divide-sand overflow-hidden rounded-2xl border border-sand bg-white/70">
+    <Section id="faq" eyebrow="FAQ" title="Yang sering ditanya">
+      <ul className="border-t-2 border-ink">
         {FAQ.map((item) => (
-          <details key={item.q} className="group px-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold">
-              {item.q}
-              <span
-                aria-hidden
-                className="shrink-0 text-xl text-brand/50 transition group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <p className="pb-4 text-ink/70">{item.a}</p>
-          </details>
+          <li key={item.q} className="border-b border-ink/10">
+            <details className="group">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-bold">
+                {item.q}
+                <span
+                  aria-hidden
+                  className="shrink-0 text-2xl leading-none font-normal text-brand/40 transition-transform group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="max-w-2xl pb-5 leading-relaxed text-ink/65">
+                {item.a}
+              </p>
+            </details>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <p className="mt-4 rounded-xl border border-dashed border-brand/30 bg-brand/5 px-4 py-3 text-sm text-ink/60">
-        <strong className="text-brand">Menunggu info owner:</strong> jumlah lapangan,
-        indoor/outdoor, durasi minimum sewa, DP dan kebijakan pembatalan, fasilitas
-        (parkir, shower, loker), serta aturan sepatu. Bagian ini ditandai sengaja.
+      <p className="mt-8 max-w-2xl border-l-2 border-brand/40 pl-4 text-sm text-ink/55">
+        <strong className="text-brand">Menunggu info owner:</strong> jumlah
+        lapangan, indoor/outdoor, durasi minimum sewa, DP dan kebijakan
+        pembatalan, fasilitas (parkir, shower, loker), serta aturan sepatu.
       </p>
     </Section>
   );
@@ -355,27 +462,38 @@ function Faq() {
 
 function Footer() {
   return (
-    <footer className="bg-brand text-cream">
-      <div className="mx-auto grid max-w-5xl gap-8 px-5 py-12 sm:grid-cols-3">
+    <footer className="relative overflow-hidden bg-brand-deep text-cream">
+      <div
+        aria-hidden
+        className="art art-mark pointer-events-none absolute -right-8 -bottom-10 h-40 w-72 text-cream/[0.07] sm:h-56 sm:w-[26rem]"
+      />
+
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-3">
         <div>
-          <p className="text-xl font-extrabold">
-            peepz<span className="text-cream/50">!</span> padel
+          <p className="text-2xl font-extrabold tracking-tight">
+            peepz<span className="text-cream/40">!</span> padel
           </p>
-          <p className="mt-2 text-sm text-cream/55">{business.address}</p>
+          <p className="mt-3 max-w-xs text-sm leading-relaxed text-cream/50">
+            {business.address}
+          </p>
         </div>
 
         <div className="text-sm">
-          <p className="font-semibold">Jam buka</p>
-          <p className="mt-1 text-cream/55">{business.hoursLabel}</p>
+          <p className="text-[0.7rem] font-bold tracking-[0.15em] text-cream/35 uppercase">
+            Jam buka
+          </p>
+          <p className="mt-2 text-cream/60">{business.hoursLabel}</p>
         </div>
 
         <div className="text-sm">
-          <p className="font-semibold">Kontak</p>
+          <p className="text-[0.7rem] font-bold tracking-[0.15em] text-cream/35 uppercase">
+            Kontak
+          </p>
           <a
             href={waGeneral}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-1 block text-cream/55 transition hover:text-cream"
+            className="mt-2 block text-cream/60 transition-colors hover:text-cream"
           >
             WhatsApp {business.phoneDisplay}
           </a>
@@ -383,62 +501,53 @@ function Footer() {
             href={business.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="block text-cream/55 transition hover:text-cream"
+            className="block text-cream/60 transition-colors hover:text-cream"
           >
             Instagram {business.instagramHandle}
           </a>
         </div>
       </div>
 
-      <div className="border-t border-cream/10 px-5 py-5 text-center text-xs text-cream/35">
+      <div className="relative border-t border-cream/10 px-6 py-5 text-center text-xs text-cream/30">
         © {new Date().getFullYear()} {business.name}
       </div>
     </footer>
   );
 }
 
-/* ------------------------------------------------------------- primitives */
+/* ----------------------------------------------------------- primitives */
 
 function Section({
   id,
+  eyebrow,
   title,
-  lead,
-  tinted,
   children,
 }: {
   id: string;
+  eyebrow: string;
   title: string;
-  lead?: string;
-  tinted?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={tinted ? "bg-sand/35" : undefined}>
-      <div className="mx-auto max-w-5xl scroll-mt-20 px-5 py-14 sm:py-20">
-        <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h2>
-        {lead && <p className="mt-3 max-w-xl text-ink/60">{lead}</p>}
-        <div className="mt-8">{children}</div>
+    <section id={id} className="scroll-mt-16">
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+        <p className="text-xs font-bold tracking-[0.2em] text-ink/40 uppercase">
+          {eyebrow}
+        </p>
+        <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          {title}
+        </h2>
+        <div className="mt-12">{children}</div>
       </div>
     </section>
   );
 }
 
-function Card({
-  title,
-  wide,
-  children,
-}: {
-  title: string;
-  wide?: boolean;
-  children: React.ReactNode;
-}) {
+function Caption({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={`rounded-2xl border border-sand bg-white/70 p-5 ${wide ? "md:col-span-2" : ""}`}
-    >
-      <h3 className="mb-1 font-bold">{title}</h3>
+    <h3 className="text-[0.7rem] font-bold tracking-[0.15em] text-ink/45 uppercase">
       {children}
-    </div>
+    </h3>
   );
 }
 
@@ -447,14 +556,14 @@ function Pending() {
   return (
     <span
       title="Nama tier belum ada di pricelist — menunggu konfirmasi owner"
-      className="ml-1.5 cursor-help rounded bg-brand/10 px-1.5 py-0.5 align-middle text-[10px] font-bold text-brand"
+      className="ml-2 cursor-help rounded bg-brand/12 px-1.5 py-0.5 align-middle text-[10px] font-bold text-brand"
     >
       ?
     </span>
   );
 }
 
-/* ---------------------------------------------------------------- json-ld */
+/* --------------------------------------------------------------- json-ld */
 
 function JsonLd() {
   const data = {
@@ -476,8 +585,13 @@ function JsonLd() {
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [
-        "Monday", "Tuesday", "Wednesday", "Thursday",
-        "Friday", "Saturday", "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
       ],
       opens: "08:00",
       closes: "24:00",
